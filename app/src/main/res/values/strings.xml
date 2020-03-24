@@ -5,8 +5,10 @@
     <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</string>
     <string name="questionHint">Antwort</string>
     <string name="questionButton">Abgeben</string>
+    <string name="hcard_button">Hab\'s gefunden!</string>
     <string name="autofillhints">Du musst erst eine Antwort eingeben!</string>
     <string name="headline_qcard">Frage</string>
+    <string name="headline_hcard">Hinweis</string>
     <string name="contentDescriptionClosebutton">Close Button</string>
 
 </resources>
