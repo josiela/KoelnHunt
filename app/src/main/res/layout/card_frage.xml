@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/cardBackground"
+    >
 
     <ImageButton
         android:id="@+id/CloseButton"
@@ -26,7 +28,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/Headline"
+                android:id="@+id/HeadlineQuestion"
                 android:text="@string/headline_qcard"
                 android:textColor="@color/cardText"
                 android:layout_width="250dp"
@@ -75,10 +77,11 @@
                     android:text="@string/questionButton"
                     android:textSize="@dimen/text_textSize"
                     android:textAllCaps="false"
-                    android:background="fff"
-                    android:layout_marginTop="60dp"
+                    android:background="#fff"
+                    android:layout_marginTop="@dimen/buttonAbstandOben"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="@dimen/card_marginStart"
+                    android:backgroundTint="@color/cardBackground"
                     />
             </LinearLayout>
         </LinearLayout>
