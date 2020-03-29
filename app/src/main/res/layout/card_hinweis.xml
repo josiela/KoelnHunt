@@ -7,10 +7,10 @@
     >
 
     <ImageButton
-        android:id="@+id/CloseButton"
+        android:id="@+id/CloseButtonHint"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/closeButton"
+        android:src="@drawable/closebutton"
         android:layout_gravity="end"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
@@ -57,10 +57,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hcard_button"
                 android:textAllCaps="false"
-                android:background="#fff"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@color/cardBackground"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/buttonAbstandOben"
-                android:backgroundTint="@color/cardBackground"
+                android:layout_marginBottom="60dp"
                 />
 
         </LinearLayout>
