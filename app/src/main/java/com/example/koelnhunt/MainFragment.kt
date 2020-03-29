@@ -1,15 +1,16 @@
 package com.example.koelnhunt
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import android.widget.Button
+import androidx.fragment.app.DialogFragment
+import kotlinx.android.synthetic.main.card_frage.view.*
+import kotlinx.android.synthetic.main.card_hinweis.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -17,15 +18,29 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MainFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    }
+
+    fun showDialog() {
+        val mHinweisView = LayoutInflater.from(activity).inflate(R.layout.card_hinweis, null)
+
+        val mBuilder = AlertDialog.Builder(activity)
+            .setView(mHinweisView)
+
+        val mHinweisDialog = mBuilder.show()
+
+        mHinweisView.CloseButtonHint.setOnClickListener{
+            mHinweisDialog.dismiss()
+        }
+
+        mHinweisView.FoundButton.setOnClickListener{
+            val mFrageView = LayoutInflater.from(activity).inflate(R.layout.card_frage, null)
+            mHinweisDialog.setContentView(mFrageView)
+            mFrageView.CloseButtonFrage.setOnClickListener{
+                mHinweisDialog.dismiss()
+            }
         }
     }
 
@@ -34,26 +49,27 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        val view = inflater.inflate(R.layout.fragment_main, container, false)
+        val button = view.findViewById<Button>(R.id.button2)
+        button.setOnClickListener {
+            showDialog()
+        }
+
+        return view
     }
+
+
 
     companion object {
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment MainFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             MainFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
             }
     }
 }
