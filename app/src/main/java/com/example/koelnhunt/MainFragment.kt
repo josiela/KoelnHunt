@@ -1,16 +1,18 @@
 package com.example.koelnhunt
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.koelnhunt.models.DataSource
 import kotlinx.android.synthetic.main.card_frage.view.*
 import kotlinx.android.synthetic.main.card_hinweis.view.*
+import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -23,6 +25,7 @@ class MainFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    @SuppressLint("InflateParams")
     fun showDialog() {
         val mHinweisView = LayoutInflater.from(activity).inflate(R.layout.card_hinweis, null)
 
@@ -44,6 +47,24 @@ class MainFragment : Fragment() {
         }
     }
 
+    //Recyclerview
+    private lateinit var blogAdapter: RecyclerAdapter
+
+    private fun initRecyclerView(){
+        recycler_view.apply {
+            layoutManager = LinearLayoutManager(activity)
+            val topSpacingDecoration = TopSpacingItemDecoration(40)
+            addItemDecoration(topSpacingDecoration)
+            blogAdapter = RecyclerAdapter()
+            adapter = blogAdapter
+        }
+    }
+
+    private fun addDataSet() {
+        val data = DataSource.createDataSet()
+        blogAdapter.submitList(data)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,10 +75,15 @@ class MainFragment : Fragment() {
         button.setOnClickListener {
             showDialog()
         }
-
         return view
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        initRecyclerView()
+        addDataSet()
+    }
 
 
     companion object {
