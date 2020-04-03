@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.koelnhunt.models.CardStructure
 import kotlinx.android.synthetic.main.recycleview_card_layout.view.*
 
-class RecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecyclerAdapter(private var clickListener: OnCardClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<CardStructure> = ArrayList()
 
@@ -23,6 +23,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             //Bind data to particular view-holder:
             is ViewHolder -> {
                 holder.bind(items[position])
+                holder.initialize(items.get(position), clickListener)
             }
         }
     }
@@ -47,6 +48,20 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             card_title.text = cardStructure.title
             card_number.text = cardStructure.number.toString()
         }
+
+        //Recyclerview OnClickListener
+        fun initialize(item: CardStructure, action: OnCardClickListener) {
+            card_title.text = item.title
+            card_number.text = item.number.toString()
+
+            itemView.setOnClickListener{
+                action.onItemClick(item, adapterPosition)
+            }
+        }
+    }
+
+    interface OnCardClickListener {
+        fun onItemClick(items: CardStructure, position: Int)
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.koelnhunt
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.koelnhunt.models.CardStructure
 import com.example.koelnhunt.models.DataSource
 import kotlinx.android.synthetic.main.card_frage.view.*
 import kotlinx.android.synthetic.main.card_hinweis.view.*
@@ -19,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
  * Use the [MainFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), RecyclerAdapter.OnCardClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +58,7 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
             val topSpacingDecoration = TopSpacingItemDecoration(40)
             addItemDecoration(topSpacingDecoration)
-            blogAdapter = RecyclerAdapter()
+            blogAdapter = RecyclerAdapter(this@MainFragment)
             adapter = blogAdapter
         }
     }
@@ -97,5 +100,9 @@ class MainFragment : Fragment() {
         fun newInstance() =
             MainFragment().apply {
             }
+    }
+
+    override fun onItemClick(items: CardStructure, position: Int) {
+        showDialog()
     }
 }
