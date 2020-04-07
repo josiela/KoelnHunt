@@ -8,14 +8,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koelnhunt.models.CardStructure
 import com.example.koelnhunt.models.DataSource
+import com.example.koelnhunt.models.HintDataSource
+import com.example.koelnhunt.models.QuestionDataSource
 import kotlinx.android.synthetic.main.card_frage.view.*
 import kotlinx.android.synthetic.main.card_hinweis.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -28,8 +33,9 @@ class MainFragment : Fragment(), RecyclerAdapter.OnCardClickListener {
         super.onCreate(savedInstanceState)
     }
 
+    // Dialog PopUp
     @SuppressLint("InflateParams")
-    fun showDialog() {
+    fun showDialog(position: Int) {
         val mHinweisView = LayoutInflater.from(activity).inflate(R.layout.card_hinweis, null)
 
         val mBuilder = AlertDialog.Builder(activity)
@@ -37,12 +43,28 @@ class MainFragment : Fragment(), RecyclerAdapter.OnCardClickListener {
 
         val mHinweisDialog = mBuilder.show()
 
+        val hintData = HintDataSource.createHintSet()[position]
+        mHinweisView.Hinweis.text = hintData
+
         mHinweisView.CloseButtonHint.setOnClickListener{
             mHinweisDialog.dismiss()
         }
 
         mHinweisView.FoundButton.setOnClickListener{
             val mFrageView = LayoutInflater.from(activity).inflate(R.layout.card_frage, null)
+
+            val questionData = QuestionDataSource.createQuestionSet()[position]
+            mFrageView.Question.text = questionData.question
+
+            mFrageView.ApplyButton.setOnClickListener{
+                if (mFrageView.QuestionField.text.toString().toLowerCase(Locale.ROOT) == questionData.answer.toLowerCase()) {
+                    handleCorrectAnswer()
+                } else {
+                    handleWrongAnswer(mFrageView.QuestionField, mFrageView.ApplyButton)
+                }
+
+            }
+
             mHinweisDialog.setContentView(mFrageView)
             mFrageView.CloseButtonFrage.setOnClickListener{
                 mHinweisDialog.dismiss()
@@ -74,10 +96,10 @@ class MainFragment : Fragment(), RecyclerAdapter.OnCardClickListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main, container, false)
-        val button = view.findViewById<Button>(R.id.button2)
+        /* val button = view.findViewById<Button>(R.id.button2)
         button.setOnClickListener {
             showDialog()
-        }
+        } */
         return view
     }
 
@@ -102,7 +124,20 @@ class MainFragment : Fragment(), RecyclerAdapter.OnCardClickListener {
             }
     }
 
+    //Recyclerview OnClickListener
     override fun onItemClick(items: CardStructure, position: Int) {
-        showDialog()
+        //TODO if position (=Listnumber) < aktueller Stand: rufe showDialog auf, ansonsten nicht
+        showDialog(position)
+    }
+
+    private fun handleCorrectAnswer() {
+        println("Yay")
+    }
+
+    private fun handleWrongAnswer(textField: EditText, applyButton: Button) {
+        val animation = AnimationUtils.loadAnimation(context, R.anim.shake)
+        applyButton.startAnimation(animation)
+        textField.text.clear()
+        textField.hint = "Versuch\'s noch mal!"
     }
 }
