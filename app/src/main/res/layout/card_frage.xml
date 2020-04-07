@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"            >
 
             <TextView
                 android:id="@+id/HeadlineQuestion"
@@ -40,28 +40,30 @@
 
             <TextView
                 android:id="@+id/Question"
-                android:layout_width="wrap_content"
+                android:layout_width="312dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/cardText"
-                android:text="@string/Lorem_ipsum"
-                android:layout_marginTop="20dp"
-                android:textSize="@dimen/text_textSize"
                 android:layout_marginStart="@dimen/card_marginStart"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="@dimen/card_marginStart"
-                />
+                android:text="@string/Lorem_ipsum"
+                android:textColor="@color/cardText"
+                android:textSize="@dimen/text_textSize" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/card_marginStart"
+                android:paddingEnd="40dp"
+                android:paddingTop="60dp"
+                android:paddingBottom="60dp"
+                >
 
                 <EditText
                     android:id="@+id/QuestionField"
-                    android:layout_width="200dp"
+                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/card_marginStart"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginBottom="60dp"
+                    android:layout_width="0dip"
                     android:ems="10"
                     android:inputType="text"
                     android:textColor="@android:color/secondary_text_dark"
@@ -72,17 +74,15 @@
 
                 <Button
                     android:id="@+id/ApplyButton"
-                    android:layout_width="100dp"
+                    android:layout_weight="0.4"
                     android:layout_height="wrap_content"
-                    android:text="@string/questionButton"
-                    android:textSize="@dimen/text_textSize"
-                    android:textAllCaps="false"
+                    android:layout_width="0dip"
+                    android:layout_marginStart="12dp"
                     android:background="@color/cardBackground"
-                    android:layout_marginTop="@dimen/buttonAbstandOben"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="@dimen/card_marginStart"
-                    android:layout_marginBottom="60dp"
-                    />
+                    android:text="@string/questionButton"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_textSize" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
